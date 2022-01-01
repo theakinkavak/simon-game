@@ -1,55 +1,39 @@
+var buttonColors = ["red", "blue", "green", "yellow"];
 var gamePattern = [];
-var buttonColors = ["green", "red", "yellow", "blue"];
+var userClickPattern = [];
+
+
+$(".btn").on("click", function() {
+
+    var userChosenColor = $(this).attr("id");
+    userClickPattern.push(userChosenColor);
+
+    playSound(userChosenColor);
+
+    animatePress(userChosenColor);
+    
+});
 
 
 function nextSquence() {
 
     var randomIndex = Math.floor(Math.random() * 4);
+    var randomChosenColor = buttonColors[randomIndex];
+    gamePattern.push(randomChosenColor);
 
-    let randomChosenColor = buttonColors[randomIndex];
+    $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
 
+    playSound(randomChosenColor);
+
+    animatePress(randomChosenColor);
+    
 }
 
 
 
+function animatePress(currentColor) {
 
-$(document).keydown(function(event) {
-
-    if (event.key === "a") {
-        $("h1").text("Level 1");
-
-        let randomButtonColor = buttonColorArray[randomColorIndex];
-
-        setTimeout(() => {
-            makeSound(randomButtonColor);
-            makeAnimation(randomButtonColor);
-        }, 1000);
-
-    };
-    
-    $(".btn").on("click", function() {
-        let currentButtonColor = $(this).attr("id");
-
-        makeSound(currentButtonColor);
-        makeAnimation(currentButtonColor);
-
-
-        if (randomButtonColor === currentButtonColor) {
-
-            $("h1").text("Game Over!");
-        }
-        
-    })
-    
-    
-    
-});
-
-
-
-function makeAnimation(activeButtonID) {
-
-    let activeButton = $(this).attr(activeButtonID);
+    let activeButton = $(this).attr(currentColor);
 
     activeButton.classList.add("pressed");
 
@@ -58,9 +42,17 @@ function makeAnimation(activeButtonID) {
     }, 100);
 }
 
-function makeSound(buttonColorID) {
+function playSound(buttonColor) {
 
-    var currentButton = new Audio("sounds/" + buttonColorID + ".mp3");
-    currentButton.play();
+    var currentButtonAudio = new Audio("sounds/" + buttonColor + ".mp3");
+    currentButtonAudio.play();
 
 }
+
+
+
+
+
+
+
+
