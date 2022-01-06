@@ -1,7 +1,7 @@
 let buttonColors = ["red", "blue", "green", "yellow"];
 let gamePattern = []; 
 let userClickPattern = []; 
-let started = false;
+let started = false; 
 let level = 0;
 
 
@@ -12,20 +12,23 @@ $(document).on("keydown", function() {
         nextSquence();
         started = true;
     }
+
 })
 
 $(".btn").on("click", function() {
+    if (started) {
+        let userChosenColor = $(this).attr("id");
+        userClickPattern.push(userChosenColor);
 
-    let userChosenColor = $(this).attr("id");
-    userClickPattern.push(userChosenColor);
+        playSound(userChosenColor);
+        animatePress(userChosenColor);
 
-    playSound(userChosenColor);
-    animatePress(userChosenColor);
-
-    checkAnswer(userClickPattern.length-1);
-    
-})
-
+        checkAnswer(userClickPattern.length-1);
+    } else {
+        alert("Press Any Key to Start! =)")
+    }
+       
+});
 
 function checkAnswer(currentLevel) {
 
